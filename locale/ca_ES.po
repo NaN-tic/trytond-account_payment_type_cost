@@ -1,0 +1,25 @@
+# 
+msgid ""
+msgstr "Content-Type: text/plain; charset=utf-8\n"
+
+msgctxt "error:account.payment.type:"
+msgid "Cost percent must be greater than 0"
+msgstr "El porcentaje de coste debe ser superior a 0"
+
+msgctxt "field:account.payment.type,cost_percent:"
+msgid "Cost (%)"
+msgstr "Coste (%)"
+
+msgctxt "field:account.payment.type,cost_product:"
+msgid "Cost product"
+msgstr "Producto de coste"
+
+msgctxt "field:account.payment.type,has_cost:"
+msgid "Has Costs?"
+msgstr "Tiene coste?"
+
+msgctxt "help:account.payment.type,has_cost:"
+msgid ""
+"Check it if it has to create a line with the operation cost in the customer "
+"invoices."
+msgstr "Marcar para crear una linea de factura con el coste de la operación."
