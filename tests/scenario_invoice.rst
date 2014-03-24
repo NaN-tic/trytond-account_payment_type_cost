@@ -240,13 +240,9 @@ Create invoice with cost::
     >>> len(invoice.lines) == 2
     True
     >>> line1, line2 = invoice.lines
-    >>> line1.amount == 200
+    >>> line1.amount == Decimal('200')
     True
-    >>> line2.amount == 10
+    >>> line2.amount == Decimal('11')
     True
-    >>> invoice.untaxed_amount == 210
-    True
-    >>> invoice.tax_amount == 21
-    True
-    >>> invoice.total_amount == 231
+    >>> invoice.untaxed_amount == Decimal('211')
     True
