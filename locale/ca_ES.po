@@ -2,10 +2,6 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
-msgctxt "error:account.payment.type:"
-msgid "Cost percent must be greater than 0"
-msgstr "El porcentaje de coste debe ser superior a 0"
-
 msgctxt "field:account.payment.type,cost_percent:"
 msgid "Cost (%)"
 msgstr "Coste (%)"
