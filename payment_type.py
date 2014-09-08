@@ -29,6 +29,8 @@ class PaymentType:
         TableHandler = backend.get('TableHandler')
         cursor = Transaction().cursor
 
+        super(PaymentType, cls).__register__(module_name)
+
         # Migration from 3.2.0: removed constraint
         table = TableHandler(cursor, cls, module_name)
         table.drop_constraint('cost_percent')
