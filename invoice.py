@@ -46,5 +46,10 @@ class Invoice:
             if 'rec_name' in key:
                 continue
             setattr(line, key, value)
-        line.unit_price = self.total_amount * self.payment_type.cost_percent
+        if self.payment_type.compute_over_total_amount:
+            line.unit_price = (self.total_amount *
+                self.payment_type.cost_percent)
+        else:
+            line.unit_price = (self.untaxed_amount *
+                self.payment_type.cost_percent)
         return line
