@@ -2,20 +2,32 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=utf-8\n"
 
+msgctxt "field:account.payment.type,compute_over_total_amount:"
+msgid "Compute over total amount"
+msgstr "Calcular sobre importe total"
+
 msgctxt "field:account.payment.type,cost_percent:"
 msgid "Cost (%)"
-msgstr "Cost (%)"
+msgstr "Coste (%)"
 
 msgctxt "field:account.payment.type,cost_product:"
 msgid "Cost product"
-msgstr "Producte de cost"
+msgstr "Producto de coste"
 
 msgctxt "field:account.payment.type,has_cost:"
 msgid "Has Costs?"
-msgstr "Té costos?"
+msgstr "¿Tiene coste?"
+
+msgctxt "help:account.payment.type,compute_over_total_amount:"
+msgid ""
+"Check it if you want to compute cost over total amount with tax, otherwise "
+"will compute it over total amount without tax"
+msgstr ""
+"Marque esta casilla si desea calcular el coste sobre el importe total con "
+"impuestos, en caso contrario lo calculará sin impuestos."
 
 msgctxt "help:account.payment.type,has_cost:"
 msgid ""
 "Check it if it has to create a line with the operation cost in the customer "
 "invoices."
-msgstr "Marqueu per crear una línea amb el cost d'operació en les factures. "
+msgstr "Marcar para crear una linea de factura con el coste de la operación."
