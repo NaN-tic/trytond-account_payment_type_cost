@@ -25,7 +25,9 @@ class PaymentType:
             }, depends=['has_cost'])
     compute_over_total_amount = fields.Boolean('Compute over total amount',
         help='Check it if you want to compute cost over total amount with tax,'
-        ' otherwise will compute it over total amount without tax')
+        ' otherwise will compute it over total amount without tax', states={
+            'invisible': Not(Eval('has_cost', False)),
+            }, depends=['has_cost'])
 
     @classmethod
     def __register__(cls, module_name):
