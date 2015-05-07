@@ -216,11 +216,9 @@ Create invoice without cost::
     >>> invoice.lines.append(line)
     >>> line.product = product
     >>> line.quantity = 5
-    >>> invoice.save()
-    >>> Invoice.post([invoice.id], config.context)
-    >>> invoice.reload()
-    >>> len(invoice.lines) == 1
-    True
+    >>> invoice.click('post')
+    >>> len(invoice.lines)
+    1
 
 Create invoice with cost::
 
@@ -232,17 +230,15 @@ Create invoice with cost::
     >>> invoice.lines.append(line)
     >>> line.product = product
     >>> line.quantity = 5
-    >>> invoice.save()
-    >>> Invoice.post([invoice.id], config.context)
-    >>> invoice.reload()
+    >>> invoice.click('post')
     >>> invoice.state
     u'posted'
     >>> len(invoice.lines) == 2
     True
     >>> line1, line2 = invoice.lines
-    >>> line1.amount == Decimal('200')
-    True
-    >>> line2.amount == Decimal('11')
-    True
-    >>> invoice.untaxed_amount == Decimal('211')
-    True
+    >>> line1.amount
+    Decimal('200.00')
+    >>> line2.amount
+    Decimal('10.00')
+    >>> invoice.untaxed_amount
+    Decimal('210.00')
