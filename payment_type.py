@@ -16,10 +16,15 @@ class PaymentType:
 
     has_cost = fields.Boolean('Has Costs?', help="Check it if it has to "
         "create a line with the operation cost in the customer invoices.")
-    cost_product = fields.Many2One('product.product', 'Cost product', states={
+    cost_product = fields.Many2One('product.product', 'Cost product',
+        domain=[
+            ('type', '=', 'service'),
+            ],
+        states={
             'required': Eval('has_cost', False),
             'invisible': Not(Eval('has_cost', False)),
-            }, depends=['has_cost'])
+            },
+        depends=['has_cost'])
     cost_percent = fields.Numeric('Cost (%)', digits=(8, 4), states={
             'required': Eval('has_cost', False),
             'invisible': Not(Eval('has_cost', False)),
