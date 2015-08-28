@@ -1,3 +1,4 @@
+# This file is part of account_payment_type_cost module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
 from trytond.pool import Pool, PoolMeta
@@ -33,19 +34,13 @@ class Invoice:
         if not self.payment_type or not self.payment_type.has_cost:
             return
 
-        line = Line()
+        line = Line(**Line.default_get(Line._fields.keys()))
         line.invoice = self
-        for key, value in Line.default_get(Line._fields.keys(),
-                with_rec_name=False).iteritems():
-            setattr(line, key, value)
         line.quantity = 1
         line.unit = None
         line.description = None
         line.product = self.payment_type.cost_product
-        for key, value in line.on_change_product().iteritems():
-            if 'rec_name' in key:
-                continue
-            setattr(line, key, value)
+        line.on_change_product()
         if self.payment_type.compute_over_total_amount:
             line.unit_price = (self.total_amount *
                 self.payment_type.cost_percent)
