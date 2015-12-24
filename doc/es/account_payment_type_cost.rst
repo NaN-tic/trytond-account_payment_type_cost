@@ -1,3 +1,4 @@
+#:inside:account_payment_type/account_invoice:section:payment_type#
 
 =============
 ¿Tiene coste?
