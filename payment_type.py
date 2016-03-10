@@ -5,7 +5,6 @@ from trytond import backend
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Not
-from trytond.transaction import Transaction
 
 __all__ = ['PaymentType']
 __metaclass__ = PoolMeta
@@ -38,10 +37,9 @@ class PaymentType:
     @classmethod
     def __register__(cls, module_name):
         TableHandler = backend.get('TableHandler')
-        cursor = Transaction().cursor
 
         super(PaymentType, cls).__register__(module_name)
 
         # Migration from 3.2.0: removed constraint
-        table = TableHandler(cursor, cls, module_name)
+        table = TableHandler(cls, module_name)
         table.drop_constraint('cost_percent')
