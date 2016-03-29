@@ -4,11 +4,10 @@
 from trytond.pool import Pool, PoolMeta
 
 __all__ = ['Invoice']
-__metaclass__ = PoolMeta
 
 
 class Invoice:
-    'Invoice'
+    __metaclass__ = PoolMeta
     __name__ = 'account.invoice'
 
     def create_move(self):
