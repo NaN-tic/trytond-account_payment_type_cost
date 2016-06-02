@@ -56,6 +56,7 @@ Create chart of accounts::
 
 Create tax::
 
+    >>> Tax = Model.get('account.tax')
     >>> tax = set_tax_code(create_tax(Decimal('.10')))
     >>> tax.save()
 
@@ -93,19 +94,14 @@ Create product::
     >>> cost_template.cost_price = Decimal('25')
     >>> cost_template.account_expense = expense
     >>> cost_template.account_revenue = revenue
-    >>> cost_template.customer_taxes.append(tax)
+    >>> cost_template.customer_taxes.append(Tax(tax.id))
     >>> cost_template.save()
     >>> cost_product.template = cost_template
     >>> cost_product.save()
 
 Create payment term::
 
-    >>> PaymentTerm = Model.get('account.invoice.payment_term')
-    >>> payment_term = PaymentTerm(name='Term')
-    >>> line = payment_term.lines.new(type='percent', percentage=Decimal(50))
-    >>> delta = line.relativedeltas.new(days=20)
-    >>> line = payment_term.lines.new(type='remainder')
-    >>> delta = line.relativedeltas.new(days=40)
+    >>> payment_term = create_payment_term()
     >>> payment_term.save()
 
 Create payment types::
@@ -126,14 +122,13 @@ Create payment types::
 Create invoice without cost::
 
     >>> Invoice = Model.get('account.invoice')
-    >>> InvoiceLine = Model.get('account.invoice.line')
     >>> invoice = Invoice()
     >>> invoice.party = party
     >>> invoice.payment_term = payment_term
     >>> invoice.payment_type = payment_type_no_cost
-    >>> line = InvoiceLine()
-    >>> invoice.lines.append(line)
+    >>> line = invoice.lines.new()
     >>> line.product = product
+    >>> line.unit_price = Decimal('40.0')
     >>> line.quantity = 5
     >>> invoice.click('post')
     >>> len(invoice.lines)
@@ -145,15 +140,13 @@ Create invoice with cost::
     >>> invoice.party = party
     >>> invoice.payment_term = payment_term
     >>> invoice.payment_type = payment_type_cost
-    >>> line = InvoiceLine()
-    >>> invoice.lines.append(line)
+    >>> line = invoice.lines.new()
     >>> line.product = product
     >>> line.quantity = 5
+    >>> line.unit_price = Decimal('40.0')
     >>> invoice.click('post')
     >>> invoice.state
     u'posted'
-    >>> len(invoice.lines) == 2
-    True
     >>> line1, line2 = invoice.lines
     >>> line1.amount
     Decimal('200.00')
