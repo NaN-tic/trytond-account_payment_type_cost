@@ -10,20 +10,26 @@ class Invoice:
     __metaclass__ = PoolMeta
     __name__ = 'account.invoice'
 
-    def create_move(self):
+    @classmethod
+    def set_number(cls, invoices):
         pool = Pool()
         Line = pool.get('account.invoice.line')
-        if self.payment_type and self.payment_type.has_cost:
-            lines = Line.search([
-                    ('invoice', '=', self),
-                    ('product', '=', self.payment_type.cost_product),
-                    ])
-            if not lines:
-                line = self._get_payment_type_cost_line()
-                line.save()
+        to_save, update_tax = [], []
+        for invoice in invoices:
+            if invoice.payment_type and invoice.payment_type.has_cost:
+                lines = Line.search([
+                        ('invoice', '=', invoice),
+                        ('product', '=', invoice.payment_type.cost_product),
+                        ])
+                if not lines:
+                    line = invoice._get_payment_type_cost_line()
+                    to_save.append(line)
+                    update_tax.append(invoice)
+        Line.save(to_save)
         # Taxes must be recomputed before creating the move
-        self.update_taxes([self])
-        return super(Invoice, self).create_move()
+        if update_tax:
+            cls.update_taxes(update_tax)
+        return super(Invoice, cls).set_number(invoices)
 
     def _get_payment_type_cost_line(self):
         " Returns invoice line with the cost"
