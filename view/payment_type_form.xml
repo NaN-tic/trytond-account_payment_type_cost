@@ -1,15 +1,14 @@
 <?xml version="1.0"?>
 <data>
-    <xpath expr="/form/notebook" position="inside">
-        <page id="costs" string="Costs">
-            <label name="has_cost"/>
-            <field name="has_cost"/>
-            <label name="cost_product"/>
-            <field name="cost_product"/>
-            <label name="cost_percent"/>
-            <field name="cost_percent" factor="100"/>
-            <label name="compute_over_total_amount"/>
-            <field name="compute_over_total_amount"/>
-        </page>
+    <xpath expr="/form/separator[@name='note']" position="before">
+        <separator id="costs" string="Costs" colspan="4"/>
+        <label name="has_cost"/>
+        <field name="has_cost"/>
+        <label name="cost_product"/>
+        <field name="cost_product"/>
+        <label name="cost_percent"/>
+        <field name="cost_percent" factor="100"/>
+        <label name="compute_over_total_amount"/>
+        <field name="compute_over_total_amount"/>
     </xpath>
 </data>
