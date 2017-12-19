@@ -60,7 +60,6 @@ Create product::
     >>> unit, = ProductUom.find([('name', '=', 'Unit')])
     >>> ProductTemplate = Model.get('product.template')
     >>> Product = Model.get('product.product')
-    >>> product = Product()
     >>> template = ProductTemplate()
     >>> template.name = 'product'
     >>> template.default_uom = unit
@@ -70,22 +69,23 @@ Create product::
     >>> template.account_expense = expense
     >>> template.account_revenue = revenue
     >>> template.customer_taxes.append(tax)
+    >>> product, = template.products
+    >>> product.cost_price = Decimal('25')
     >>> template.save()
-    >>> product.template = template
-    >>> product.save()
+    >>> product, = template.products
     >>> cost_product = Product()
     >>> cost_template = ProductTemplate()
     >>> cost_template.name = 'cost product'
     >>> cost_template.default_uom = unit
     >>> cost_template.type = 'service'
     >>> cost_template.list_price = Decimal('40')
-    >>> cost_template.cost_price = Decimal('25')
     >>> cost_template.account_expense = expense
     >>> cost_template.account_revenue = revenue
     >>> cost_template.customer_taxes.append(Tax(tax.id))
+    >>> cost_product, = cost_template.products
+    >>> cost_product.cost_price = Decimal('25')
     >>> cost_template.save()
-    >>> cost_product.template = cost_template
-    >>> cost_product.save()
+    >>> cost_product, = cost_template.products
 
 Create payment term::
 
@@ -135,10 +135,6 @@ Create invoice with cost::
     >>> invoice.click('post')
     >>> invoice.state
     u'posted'
-    >>> line1, line2 = invoice.lines
+    >>> line1, = invoice.lines
     >>> line1.amount
     Decimal('200.00')
-    >>> line2.amount
-    Decimal('10.00')
-    >>> invoice.untaxed_amount
-    Decimal('210.00')
