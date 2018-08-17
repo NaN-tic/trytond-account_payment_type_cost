@@ -9,8 +9,7 @@ from trytond.pyson import Eval, Not
 __all__ = ['PaymentType']
 
 
-class PaymentType:
-    __metaclass__ = PoolMeta
+class PaymentType(metaclass=PoolMeta):
     __name__ = 'account.payment.type'
 
     has_cost = fields.Boolean('Has Costs?', help="Check it if it has to "

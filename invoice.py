@@ -6,8 +6,7 @@ from trytond.pool import Pool, PoolMeta
 __all__ = ['Invoice']
 
 
-class Invoice:
-    __metaclass__ = PoolMeta
+class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
 
     @classmethod
@@ -39,7 +38,7 @@ class Invoice:
         if not self.payment_type or not self.payment_type.has_cost:
             return
 
-        line = Line(**Line.default_get(Line._fields.keys()))
+        line = Line(**Line.default_get(list(Line._fields.keys())))
         line.invoice = self
         line.quantity = 1
         line.unit = None

@@ -140,7 +140,7 @@ Create invoice with cost::
     >>> line.unit_price = Decimal('40.0')
     >>> invoice.click('post')
     >>> invoice.state
-    u'posted'
+    'posted'
     >>> line1, = invoice.lines
     >>> line1.amount
     Decimal('200.00')
