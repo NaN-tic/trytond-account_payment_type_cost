@@ -11,9 +11,9 @@ class Invoice(metaclass=PoolMeta):
 
     @classmethod
     def set_number(cls, invoices):
-        pool = Pool()
-        Line = pool.get('account.invoice.line')
-        to_save, update_tax = [], []
+        Line = Pool().get('account.invoice.line')
+
+        to_create, update_tax = [], []
         for invoice in invoices:
             if invoice.payment_type and invoice.payment_type.has_cost:
                 lines = Line.search([
@@ -22,9 +22,11 @@ class Invoice(metaclass=PoolMeta):
                         ])
                 if not lines:
                     line = invoice._get_payment_type_cost_line()
-                    to_save.append(line)
-                    update_tax.append(invoice)
-        Line.save(to_save)
+                    if line:
+                        to_create.append(line._save_values)
+                        update_tax.append(invoice)
+        if to_create:
+            Line.create(to_create)
         # Taxes must be recomputed before creating the move
         if update_tax:
             cls.update_taxes(update_tax)
