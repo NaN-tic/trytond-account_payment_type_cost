@@ -97,11 +97,11 @@ Create payment types::
     >>> PaymentType = Model.get('account.payment.type')
     >>> payment_type_no_cost = PaymentType()
     >>> payment_type_no_cost.name = 'No cost'
-    >>> payment_type_no_cost.kind = 'receivable'
+    >>> payment_type_no_cost.kind = 'both'
     >>> payment_type_no_cost.save()
     >>> payment_type_cost = PaymentType()
     >>> payment_type_cost.name = 'Cost'
-    >>> payment_type_cost.kind = 'receivable'
+    >>> payment_type_cost.kind = 'both'
     >>> payment_type_cost.has_cost = True
     >>> payment_type_cost.cost_product = cost_product
     >>> payment_type_cost.cost_percent = Decimal('0.05')
@@ -110,31 +110,40 @@ Create payment types::
 Create invoice without cost::
 
     >>> Invoice = Model.get('account.invoice')
+    >>> InvoiceLine = Model.get('account.invoice.line')
     >>> invoice = Invoice()
     >>> invoice.party = party
     >>> invoice.payment_term = payment_term
     >>> invoice.payment_type = payment_type_no_cost
-    >>> line = invoice.lines.new()
+    >>> line = InvoiceLine()
+    >>> invoice.lines.append(line)
     >>> line.product = product
-    >>> line.unit_price = Decimal('40.0')
     >>> line.quantity = 5
+    >>> line.unit_price = Decimal('40.0')
+    >>> invoice.save()
     >>> invoice.click('post')
+    >>> invoice.state
+    u'posted'
     >>> len(invoice.lines)
     1
 
 Create invoice with cost::
 
-    >>> invoice = Invoice()
-    >>> invoice.party = party
-    >>> invoice.payment_term = payment_term
-    >>> invoice.payment_type = payment_type_cost
-    >>> line = invoice.lines.new()
+    >>> invoice2 = Invoice()
+    >>> invoice2.party = party
+    >>> invoice2.payment_term = payment_term
+    >>> invoice2.payment_type = payment_type_cost
+    >>> line = InvoiceLine()
+    >>> invoice2.lines.append(line)
     >>> line.product = product
     >>> line.quantity = 5
     >>> line.unit_price = Decimal('40.0')
-    >>> invoice.click('post')
-    >>> invoice.state
+    >>> invoice2.save()
+    >>> invoice2.click('post')
+    >>> invoice2.state
     u'posted'
-    >>> line1, = invoice.lines
+    >>> line1, line2 = invoice2.lines
     >>> line1.amount
     Decimal('200.00')
+    >>> line2.amount
+    Decimal('10.00')
