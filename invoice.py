@@ -12,7 +12,7 @@ class Invoice(metaclass=PoolMeta):
     @classmethod
     def set_number(cls, invoices):
         Line = Pool().get('account.invoice.line')
-
+        
         to_create, update_tax = [], []
         for invoice in invoices:
             if invoice.payment_type and invoice.payment_type.has_cost:
