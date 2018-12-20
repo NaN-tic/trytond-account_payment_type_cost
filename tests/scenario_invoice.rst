@@ -131,17 +131,19 @@ Create invoice with cost::
 
     >>> invoice2 = Invoice()
     >>> invoice2.party = party
-    >>> invoice2.payment_term = payment_term
-    >>> invoice2.payment_type = payment_type_cost
     >>> line = InvoiceLine()
     >>> invoice2.lines.append(line)
     >>> line.product = product
     >>> line.quantity = 5
     >>> line.unit_price = Decimal('40.0')
     >>> invoice2.save()
+    >>> invoice2.payment_term = payment_term
+    >>> invoice2.payment_type = payment_type_cost
+    >>> invoice2.save()
     >>> invoice2.click('post')
     >>> invoice2.state
     u'posted'
+    >>> invoice2.reload()
     >>> line1, line2 = invoice2.lines
     >>> line1.amount
     Decimal('200.00')
