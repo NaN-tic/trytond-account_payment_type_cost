@@ -129,7 +129,7 @@ Create invoice without cost::
     >>> invoice.save()
     >>> invoice.click('post')
     >>> invoice.state
-    u'posted'
+    'posted'
     >>> len(invoice.lines)
     1
 
@@ -148,7 +148,7 @@ Create invoice with cost::
     >>> invoice2.save()
     >>> invoice2.click('post')
     >>> invoice2.state
-    u'posted'
+    'posted'
     >>> line1, line2 = invoice2.lines
     >>> line1.amount
     Decimal('200.00')
