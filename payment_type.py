@@ -35,10 +35,8 @@ class PaymentType(metaclass=PoolMeta):
 
     @classmethod
     def __register__(cls, module_name):
-        TableHandler = backend.get('TableHandler')
-
         super(PaymentType, cls).__register__(module_name)
 
         # Migration from 3.2.0: removed constraint
-        table = TableHandler(cls, module_name)
+        table = backend.TableHandler(cls, module_name)
         table.drop_constraint('cost_percent')
