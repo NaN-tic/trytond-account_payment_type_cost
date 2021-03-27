@@ -6,8 +6,6 @@ from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Not
 
-__all__ = ['PaymentType']
-
 
 class PaymentType(metaclass=PoolMeta):
     __name__ = 'account.payment.type'

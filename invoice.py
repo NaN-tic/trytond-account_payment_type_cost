@@ -3,8 +3,6 @@
 # the full copyright notices and license terms.
 from trytond.pool import Pool, PoolMeta
 
-__all__ = ['Invoice']
-
 
 class Invoice(metaclass=PoolMeta):
     __name__ = 'account.invoice'
