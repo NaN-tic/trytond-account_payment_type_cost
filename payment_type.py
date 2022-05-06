@@ -20,7 +20,10 @@ class PaymentType(metaclass=PoolMeta):
             'required': Eval('has_cost', False),
             'invisible': Not(Eval('has_cost', False)),
             },
-        depends=['has_cost'])
+        context={
+            'company': Eval('company'),
+            },
+        depends=['has_cost', 'company'])
     cost_percent = fields.Numeric('Cost (%)', digits=(8, 4), states={
             'required': Eval('has_cost', False),
             'invisible': Not(Eval('has_cost', False)),
