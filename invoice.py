@@ -21,7 +21,7 @@ class Invoice(metaclass=PoolMeta):
                 if not lines:
                     line = invoice._get_payment_type_cost_line()
                     if line:
-                        to_create.append(line._save_values)
+                        to_create.append(line._save_values())
                         update_tax.append(invoice)
         if to_create:
             Line.create(to_create)
