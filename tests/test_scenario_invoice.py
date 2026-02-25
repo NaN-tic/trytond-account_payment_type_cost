@@ -109,7 +109,7 @@ class Test(unittest.TestCase):
         # Create invoice without cost
         Invoice = Model.get('account.invoice')
         InvoiceLine = Model.get('account.invoice.line')
-        invoice = Invoice()
+        invoice = Invoice(type='out')
         invoice.party = party
         invoice.payment_term = payment_term
         invoice.payment_type = payment_type_no_cost
@@ -124,7 +124,7 @@ class Test(unittest.TestCase):
         self.assertEqual(len(invoice.lines), 1)
 
         # Create invoice with cost
-        invoice2 = Invoice()
+        invoice2 = Invoice(type='out')
         invoice2.party = party
         line = InvoiceLine()
         invoice2.lines.append(line)
