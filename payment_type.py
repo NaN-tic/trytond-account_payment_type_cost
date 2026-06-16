@@ -1,7 +1,6 @@
 # This file is part of account_payment_type_cost module for Tryton.
 # The COPYRIGHT file at the top level of this repository contains
 # the full copyright notices and license terms.
-from trytond import backend
 from trytond.model import fields
 from trytond.pool import PoolMeta
 from trytond.pyson import Eval, Not
@@ -39,5 +38,5 @@ class PaymentType(metaclass=PoolMeta):
         super(PaymentType, cls).__register__(module_name)
 
         # Migration from 3.2.0: removed constraint
-        table = backend.TableHandler(cls, module_name)
+        table = cls.__table_handler__(module_name)
         table.drop_constraint('cost_percent')
